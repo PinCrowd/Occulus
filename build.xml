@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PINCROWD HAAR Classifier Build" default="build" basedir=".">
+    <property name="opencv.createsamples" value="opencv_createsamples"/>
+    <property name="opencv.traincascade" value="opencv_traincascade"/>
+    <property name="opencv.haartraining" value="opencv_haartraining"/>
+    <property name="c.w" value="-w 30"/>
+    <property name="c.h" value="-h 30"/>
+    <property name="c.maxxangle" value="-maxxangle 0.1"/>
+    <property name="c.maxyangle" value="-maxyangle 0.1"/>
+    <property name="c.maxzangle" value="-maxzangle 0.1"/>
+    <property name="c.maxidev" value="-maxidev 10"/>
+    <property name="c.bgcolor" value="-bgcolor 0"/>
+    <property name="c.bgthresh" value="-bgthresh 25"/>
+    <property name="c.num" value="10000"/>
+    <property name="c.negNum" value="5000"/>
+    <property name="c.nstages" value="-numStages 20"/>
+    <property name="c.mem" value="-mem 2000"/>
+    <property name="c.mode" value="ALL" description="uses the full set of upright and 45 degree rotated feature"/>
+    <!--<property name="c.mode" value="CORE" description=""/>-->
+    <!--<property name="c.mode" value="BASIC" description="use only upright features"/>-->
+    <property name="c.pos" value="-img ${basedir}/images/positives/rings.png"/>
+    <!--<property name="c.pos" value="-info ${basedir}/positives.dat" />-->
+    <property name="c.neg" value="-bg ${basedir}/negatives_x4.dat"/>
+    <property name="c.featureType" value="HAAR" description="Haar-like features"/>
+    <!--<property name="c.featureType" value="LBP" description="logical binary patterns"/>-->
+    <property name="c.bt" value="GAB" description="Gentle AdaBoost"/>
+    <!--<property name="c.bt" value="DAB" description="Discrete AdaBoost"/>-->
+    <!--<property name="c.bt" value="LB" description="LogitBoost"/>-->
+    <!--<property name="c.bt" value="RAB" description="Real AdaBoost"/>-->
+    <property name="c.maxFalseAlarmRate" value="0.5"
+              description="Maximal desired false alarm rate for each stage of
+              the classifier. Overall false alarm rate may be estimated as
+              (max_false_alarm_rate^number_of_stages)."/>
+    <target name="set.filename">
+    </target>
+    <target name="get.filename" unless="c.filename">
+        <exec outputproperty="tmp.filename" executable="date">
+            <arg line="+%s-${c.featureType}-${c.mode}-${c.bt}-${c.maxFalseAlarmRate}-${c.num}_${c.negNum}"/>
+        </exec>
+        <property name="c.filename" value="cascades/${tmp.filename}"/>
+        <mkdir dir="${c.filename}"/>
+    </target>
+    <target name="createsamples" depends="get.filename">
+        <exec executable="${opencv.createsamples}">
+            <arg line="${c.pos}"/>
+            <arg line="${c.neg}"/>
+            <arg line="-vec ${basedir}/${c.filename}/data.vec"/>
+            <arg line="${c.maxxangle}"/>
+            <arg line="${c.maxyangle}"/>
+            <arg line="${c.maxzangle}"/>
+            <arg line="${c.maxidev}"/>
+            <arg line="${c.bgcolor}"/>
+            <arg line="${c.bgthresh}"/>
+            <arg line="${c.w}"/>
+            <arg line="${c.h}"/>
+            <arg line="-num ${c.num}"/>
+        </exec>
+    </target>
+    <target name="traincascade" depends="get.filename">
+        <exec executable="${opencv.traincascade}">
+            <arg line="-data ${c.filename}"/>
+            <arg line="-vec ${c.filename}/data.vec"/>
+            <arg line="${c.neg}"/>
+            <arg line="${c.mem}"/>
+            <arg line="-mode ${c.mode}"/>
+            <arg line="${c.w}"/>
+            <arg line="${c.h}"/>
+            <arg line="-bt ${c.bt}"/>
+            <arg line="-maxFalseAlarmRate ${c.maxFalseAlarmRate}"/>
+            <arg line="-featureType ${c.featureType}"/>
+            <arg line="-numPos ${c.num}"/>
+            <arg line="-numNeg ${c.negNum}"/>
+        </exec>
+    </target>
+    <target name="build" depends="createsamples,traincascade"/>
+</project>
