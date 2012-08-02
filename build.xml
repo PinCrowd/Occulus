@@ -3,22 +3,22 @@
     <property name="opencv.createsamples" value="opencv_createsamples"/>
     <property name="opencv.traincascade" value="opencv_traincascade"/>
     <property name="opencv.haartraining" value="opencv_haartraining"/>
-    <property name="c.w" value="-w 30"/>
-    <property name="c.h" value="-h 30"/>
-    <property name="c.maxxangle" value="-maxxangle 0.1"/>
-    <property name="c.maxyangle" value="-maxyangle 0.1"/>
-    <property name="c.maxzangle" value="-maxzangle 0.1"/>
-    <property name="c.maxidev" value="-maxidev 10"/>
+    <property name="c.w" value="-w 20"/>
+    <property name="c.h" value="-h 20"/>
+    <property name="c.maxxangle" value="-maxxangle 0.02"/>
+    <property name="c.maxyangle" value="-maxyangle 0.02"/>
+    <property name="c.maxzangle" value="-maxzangle 0.02"/>
+    <property name="c.maxidev" value="-maxidev 100"/>
     <property name="c.bgcolor" value="-bgcolor 0"/>
     <property name="c.bgthresh" value="-bgthresh 25"/>
-    <property name="c.num" value="10000"/>
-    <property name="c.negNum" value="5000"/>
+    <property name="c.num" value="3000"/>
+    <property name="c.negNum" value="1500"/>
     <property name="c.nstages" value="-numStages 20"/>
     <property name="c.mem" value="-mem 2000"/>
     <property name="c.mode" value="ALL" description="uses the full set of upright and 45 degree rotated feature"/>
     <!--<property name="c.mode" value="CORE" description=""/>-->
     <!--<property name="c.mode" value="BASIC" description="use only upright features"/>-->
-    <property name="c.pos" value="-img ${basedir}/images/positives/rings.png"/>
+    <property name="c.pos" value="-img ${basedir}/images/rings.png"/>
     <!--<property name="c.pos" value="-info ${basedir}/positives.dat" />-->
     <property name="c.neg" value="-bg ${basedir}/negatives_x4.dat"/>
     <property name="c.featureType" value="HAAR" description="Haar-like features"/>
@@ -62,14 +62,14 @@
             <arg line="-vec ${c.filename}/data.vec"/>
             <arg line="${c.neg}"/>
             <arg line="${c.mem}"/>
-            <arg line="-mode ${c.mode}"/>
+            <!--<arg line="-mode ${c.mode}"/>-->
             <arg line="${c.w}"/>
             <arg line="${c.h}"/>
-            <arg line="-bt ${c.bt}"/>
-            <arg line="-maxFalseAlarmRate ${c.maxFalseAlarmRate}"/>
-            <arg line="-featureType ${c.featureType}"/>
-            <arg line="-numPos ${c.num}"/>
-            <arg line="-numNeg ${c.negNum}"/>
+            <!--<arg line="-bt ${c.bt}"/>-->
+            <!--&lt;!&ndash;<arg line="-maxFalseAlarmRate ${c.maxFalseAlarmRate}"/>&ndash;&gt;-->
+            <!--<arg line="-featureType ${c.featureType}"/>-->
+            <!--<arg line="-numPos ${c.num}"/>-->
+            <!--<arg line="-numNeg ${c.negNum}"/>-->
         </exec>
     </target>
     <target name="build" depends="createsamples,traincascade"/>
