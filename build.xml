@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="PINCROWD HAAR Classifier Build" default="build" basedir=".">
-    <property name="opencv.createsamples" value="opencv_createsamples"/>
-    <property name="opencv.traincascade" value="opencv_traincascade"/>
-    <property name="opencv.haartraining" value="opencv_haartraining"/>
+    <property name="opencv.createsamples" value="/usr/local/bin/opencv_createsamples"/>
+    <property name="opencv.traincascade" value="/usr/local/bin/opencv_traincascade"/>
+    <property name="opencv.haartraining" value="/usr/local/bin/opencv_haartraining"/>
     <property name="c.w" value="-w 20"/>
     <property name="c.h" value="-h 20"/>
     <property name="c.maxxangle" value="-maxxangle 0.02"/>
@@ -59,17 +59,17 @@
     <target name="traincascade" depends="get.filename">
         <exec executable="${opencv.traincascade}">
             <arg line="-data ${c.filename}"/>
-            <arg line="-vec ${c.filename}/data.vec"/>
+            <arg line="-vec large.vec"/>
             <arg line="${c.neg}"/>
             <arg line="${c.mem}"/>
-            <!--<arg line="-mode ${c.mode}"/>-->
-            <arg line="${c.w}"/>
-            <arg line="${c.h}"/>
-            <!--<arg line="-bt ${c.bt}"/>-->
-            <!--&lt;!&ndash;<arg line="-maxFalseAlarmRate ${c.maxFalseAlarmRate}"/>&ndash;&gt;-->
-            <!--<arg line="-featureType ${c.featureType}"/>-->
-            <!--<arg line="-numPos ${c.num}"/>-->
-            <!--<arg line="-numNeg ${c.negNum}"/>-->
+            <arg line="-mode ${c.mode}"/>
+            <arg line="-w 24"/>
+            <arg line="-h 24"/>
+            <arg line="-bt ${c.bt}"/>
+            <arg line="-maxFalseAlarmRate ${c.maxFalseAlarmRate}"/>
+            <arg line="-featureType ${c.featureType}"/>
+            <arg line="-numPos 20000"/>
+            <arg line="-numNeg 10000"/>
         </exec>
     </target>
     <target name="build" depends="createsamples,traincascade"/>

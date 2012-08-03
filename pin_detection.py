@@ -3,8 +3,6 @@ import os
 import cv2
 import cv2.cv as cv
 
-"1343772283-HAAR-ALL-GAB-0.5-10000_5000"
-"1343751055-HAAR-GAB-0.45-20000_10000"
 
 cascade_fn = "cascades/1343845877-HAAR-ALL-GAB-0.5-3000_1500/cascade.xml"
 in_image_fn  = "images/positives/pins-cropped.png"
