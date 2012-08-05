@@ -1,15 +1,14 @@
 #!/bin/bash
-n = 1
 for z in {a..z}
 do
-    for i in {0..10}
+    for i in {0..31}
     do
     n=$((RANDOM%200+100))
     opencv_createsamples \
       -img images/positives/$i.png \
-      -vec vectors/$z-$i.vec \
+      -vec vectors-31/$z-$i.vec \
       -bg negatives_2x.dat \
-      -num 1000 \
+      -num 30 \
       -bgcolor 0 \
       -bgthresh 80 \
       -maxidev 40 \

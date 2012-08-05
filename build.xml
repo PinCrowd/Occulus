@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="PINCROWD HAAR Classifier Build" default="build" basedir=".">
-    <property name="opencv.createsamples" value="/usr/local/bin/opencv_createsamples"/>
-    <property name="opencv.traincascade" value="/usr/local/bin/opencv_traincascade"/>
-    <property name="opencv.haartraining" value="/usr/local/bin/opencv_haartraining"/>
+    <property name="opencv.createsamples" value="opencv_createsamples"/>
+    <property name="opencv.traincascade" value="opencv_traincascade"/>
+    <property name="opencv.haartraining" value="opencv_haartraining"/>
     <property name="c.w" value="-w 20"/>
     <property name="c.h" value="-h 20"/>
     <property name="c.maxxangle" value="-maxxangle 0.02"/>
@@ -37,14 +37,15 @@
         <exec outputproperty="tmp.filename" executable="date">
             <arg line="+%s-${c.featureType}-${c.mode}-${c.bt}-${c.maxFalseAlarmRate}-${c.num}_${c.negNum}"/>
         </exec>
-        <property name="c.filename" value="cascades/${tmp.filename}"/>
+        <!--<property name="c.filename" value="cascades/${tmp.filename}"/>-->
+<property name="c.filename" value="cascades/vectors-31"/>
         <mkdir dir="${c.filename}"/>
     </target>
     <target name="createsamples" depends="get.filename">
         <exec executable="${opencv.createsamples}">
             <arg line="${c.pos}"/>
             <arg line="${c.neg}"/>
-            <arg line="-vec ${basedir}/${c.filename}/data.vec"/>
+            <arg line="-vec ${basedir}/${c.filename}/_vectors.vec"/>
             <arg line="${c.maxxangle}"/>
             <arg line="${c.maxyangle}"/>
             <arg line="${c.maxzangle}"/>
@@ -68,8 +69,8 @@
             <arg line="-bt ${c.bt}"/>
             <arg line="-maxFalseAlarmRate ${c.maxFalseAlarmRate}"/>
             <arg line="-featureType ${c.featureType}"/>
-            <arg line="-numPos 20000"/>
-            <arg line="-numNeg 10000"/>
+            <arg line="-numPos 15000"/>
+            <arg line="-numNeg 7500"/>
         </exec>
     </target>
     <target name="build" depends="createsamples,traincascade"/>

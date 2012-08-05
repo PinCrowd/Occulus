@@ -4,18 +4,20 @@ import cv2
 import cv2.cv as cv
 
 
-cascade_fn = "cascades/1343845877-HAAR-ALL-GAB-0.5-3000_1500/cascade.xml"
-in_image_fn  = "images/positives/pins-cropped.png"
+cascade_fn = "bowling-pins.xml"
+in_image_fn  = "cropped.png"
 out_image_fn = "images/detected.jpg"
 cascade = cv2.CascadeClassifier(cascade_fn)
 
 if os.path.exists(in_image_fn) & os.path.exists(cascade_fn):
     img = cv2.imread(in_image_fn)
-#    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-#    gray = cv2.equalizeHist(gray)
-    rectangles = cascade.detectMultiScale(img, scaleFactor=1.001, minNeighbors=1,
-        flags=0|cv.CV_HAAR_SCALE_IMAGE,
-        minSize=(60, 60), maxSize=(160, 160))
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray = cv2.equalizeHist(gray)
+    cv2.equalizeHist(gray, gray)
+
+    rectangles = cascade.detectMultiScale(img, scaleFactor=1.1, minNeighbors=1,
+        flags=cv.CV_HAAR_SCALE_IMAGE|cv.CV_HAAR_DO_CANNY_PRUNING,
+        minSize=(50, 50), maxSize=(130,130))
 
     print(rectangles)
     print(len(rectangles))
