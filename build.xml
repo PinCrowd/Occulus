@@ -38,14 +38,14 @@
             <arg line="+%s-${c.featureType}-${c.mode}-${c.bt}-${c.maxFalseAlarmRate}-${c.num}_${c.negNum}"/>
         </exec>
         <!--<property name="c.filename" value="cascades/${tmp.filename}"/>-->
-<property name="c.filename" value="cascades/vectors-31"/>
+<property name="c.filename" value="cascades/vectors-of-all-vectors"/>
         <mkdir dir="${c.filename}"/>
     </target>
     <target name="createsamples" depends="get.filename">
         <exec executable="${opencv.createsamples}">
             <arg line="${c.pos}"/>
             <arg line="${c.neg}"/>
-            <arg line="-vec ${basedir}/${c.filename}/_vectors.vec"/>
+            <arg line="-vec ${basedir}/${c.filename}/vectors.vec"/>
             <arg line="${c.maxxangle}"/>
             <arg line="${c.maxyangle}"/>
             <arg line="${c.maxzangle}"/>
@@ -60,7 +60,7 @@
     <target name="traincascade" depends="get.filename">
         <exec executable="${opencv.traincascade}">
             <arg line="-data ${c.filename}"/>
-            <arg line="-vec large.vec"/>
+            <arg line="-vec _vectors.vec"/>
             <arg line="${c.neg}"/>
             <arg line="${c.mem}"/>
             <arg line="-mode ${c.mode}"/>
