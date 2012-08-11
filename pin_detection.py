@@ -4,9 +4,9 @@ import cv2
 import cv2.cv as cv
 
 
-cascade_fn = "bowling-pins.xml"
-in_image_fn  = "cropped.png"
-out_image_fn = "images/detected.jpg"
+cascade_fn = "vectors-of-all-vectors.xml"
+in_image_fn  = "multilave.png"
+out_image_fn = "detected.jpg"
 cascade = cv2.CascadeClassifier(cascade_fn)
 
 if os.path.exists(in_image_fn) & os.path.exists(cascade_fn):
@@ -17,7 +17,7 @@ if os.path.exists(in_image_fn) & os.path.exists(cascade_fn):
 
     rectangles = cascade.detectMultiScale(img, scaleFactor=1.1, minNeighbors=1,
         flags=cv.CV_HAAR_SCALE_IMAGE|cv.CV_HAAR_DO_CANNY_PRUNING,
-        minSize=(50, 50), maxSize=(130,130))
+        minSize=(50, 50), maxSize=(80,80))
 
     print(rectangles)
     print(len(rectangles))

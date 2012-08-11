@@ -70,7 +70,7 @@
             <arg line="-maxFalseAlarmRate ${c.maxFalseAlarmRate}"/>
             <arg line="-featureType ${c.featureType}"/>
             <arg line="-numPos 15000"/>
-            <arg line="-numNeg 7500"/>
+            <arg line="-numNeg 10000"/>
         </exec>
     </target>
     <target name="build" depends="createsamples,traincascade"/>
